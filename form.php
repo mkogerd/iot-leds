@@ -14,10 +14,10 @@
 		
 		// Close and open the file so it can be overwritten rather than appended to
 		fclose($myfile);
-		sleep(5);
+		/*sleep(5);
 		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
 		fwrite($myfile,"0");
-		fclose($myfile);
+		fclose($myfile);*/
 	}
 	
 	# Return to original page
