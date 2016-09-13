@@ -1,6 +1,18 @@
 <?php
+	// Set LEDs based on text fields
+	$r = $_GET["r"];
+	$g = $_GET["g"];
+	$b = $_GET["b"];
+	// Check for valid input (0-255)
+	if($r >= "0" && $r <="255" && $g >="0" && $g <="255" && $b >="0"&& $b <="255"){
+		// Record input
+		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
+		fwrite($myfile, $_GET["r"]." ".$_GET["g"]." ".$_GET["b"]);
+		fclose($myfile);
+	}
 
-	if($_GET["color"] !="0"){
+	// Set LEDs based on radio selection
+	else if($_GET["color"] !="0"){
 		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
 
 		// Record input
@@ -11,13 +23,7 @@
 		}elseif($_GET["color"] =="blue"){
 			fwrite($myfile,"0 0 255");
 		}
-		
-		// Close and open the file so it can be overwritten rather than appended to
 		fclose($myfile);
-		/*sleep(5);
-		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
-		fwrite($myfile,"0");
-		fclose($myfile);*/
 	}
 	
 	# Return to original page
