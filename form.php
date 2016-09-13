@@ -5,11 +5,11 @@
 
 		// Record input
 		if($_GET["color"] =="red"){
-			fwrite($myfile, "1");
+			fwrite($myfile, "255 0 0");
 		}elseif($_GET["color"] =="green"){
-			fwrite($myfile,"2");
+			fwrite($myfile,"0 255 0");
 		}elseif($_GET["color"] =="blue"){
-			fwrite($myfile,"3");
+			fwrite($myfile,"0 0 255");
 		}
 		
 		// Close and open the file so it can be overwritten rather than appended to
