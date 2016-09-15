@@ -1,7 +1,7 @@
 <html>
 	<body> 
 		<form method="get" action="form.php">
-			<input type="radio" name="color" value="red" checked>Red<br>
+			<input type="radio" name="color" value="red">Red<br>
 			<input type="radio" name="color" value="green">Green<br>
 			<input type="radio" name="color" value="blue">Blue<br>
 			<br>
@@ -11,6 +11,17 @@
 			<input type="text" name="g"><br>
 			Blue:<br>
 			<input type="text" name="b"><br>
+			<br>
+			R: 
+			<input type="range" name="slideRed" value="0" min="0" max="255"><br>
+                        G: 
+			<input type="range" name="slideGreen" value="0" min="0" max="255"><br>
+                        B: 
+			<input type="range" name="slideBlue" value="0" min="0" max="255"><br>
+			<br>		
+			Color Value (#ffffff):<br>
+			<input type="color" name="color2"><br>
+			<br>
 			<input type="submit">
 		</form>
 	</body>
