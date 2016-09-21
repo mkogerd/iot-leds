@@ -4,9 +4,9 @@
 	$r = hexdec(file_get_contents('color.txt', NULL, NULL, 1, 2));
 	$g = hexdec(file_get_contents('color.txt', NULL, NULL, 3, 2));
 	$b = hexdec(file_get_contents('color.txt', NULL, NULL, 5, 2));
-
+	
 	// Set LEDs based on color form
-	if($_GET["color2"] !=$color){
+	if($_GET["color2"] !=$color && $_GET["color2"] !=""){
 		echo $_GET["color2"];
 
 		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
@@ -50,6 +50,7 @@
 			if(strlen($wb) < "2")
 				$wb = "0".$wb;
 
+        fwrite($testfile, "Opening file for TEXT #3 -> ");
 			// Record input
 			$myfile = fopen("color.txt", "w") or die("Unable to open file!");
 			fwrite($myfile, "#".$wr.$wg.$wb);
@@ -57,21 +58,6 @@
 		}
 	}
 
-	// Set LEDs based on radio selection
-	else if($_GET["color"] !="0"){
-		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
-
-		// Record input
-		if($_GET["color"] =="red"){
-			fwrite($myfile, "#ff0000");
-		}elseif($_GET["color"] =="green"){
-			fwrite($myfile,"#00ff00");
-		}elseif($_GET["color"] =="blue"){
-			fwrite($myfile,"#0000ff");
-		}
-		fclose($myfile);
-	}
-	
 	# Return to original page
 	if(isset($_REQUEST["destination"])){			// Not currently used since the request form is coming from an html page
       		header("Location: {$_REQUEST["destination"]}");
@@ -80,5 +66,5 @@
   	}else{
        		// some fallback, maybe redirect to index.php	// Not implemented yet
   	}
-
 ?>
+

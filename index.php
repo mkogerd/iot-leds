@@ -12,10 +12,11 @@
 
 		<!-- Custom style Jquery sliders to match colors -->
 		<style>
+			.clearfix {
+				overflow: auto;
+			}
 			.slider {
-				float: left;
-				clear: left;
-				width: 300px;
+				width: 50%;
 				margin: 15px;
 			}
 			.slider[data-color="r"] .ui-slider-range { background: #ff0000; }
@@ -24,13 +25,7 @@
 		</style>
 	</head>
 	<body> 
-		<form method="get" action="form.php">
-			<div id="radio">
-				<input type="radio" name="color" value="red" <?php if ($r =="255" && ($g+$b) =="0") echo "checked"; ?>>Red<br>
-				<input type="radio" name="color" value="green" <?php if ($g =="255" && ($r+$b) =="0") echo "checked"; ?>>Green<br>
-				<input type="radio" name="color" value="blue" <?php if ($b =="255" && ($r+$g) == "0") echo "checked"; ?>>Blue<br>
-			</div>
-			<br>
+		<form id="form1" method="get" action="form.php">
 			<div id="text">
 				Red:<br>
 				<input type="text" name="r" value="<?php echo $r; ?>"><br>
@@ -41,25 +36,19 @@
 			</div>
 			<br>
 			<div id="sliders">
-				R: 
-				<input type="range" name="slideRed" value="<?php echo $r; ?>" min="0" max="255"><br>
-				G: 
-				<input type="range" name="slideGreen" value="<?php echo $g; ?>" min="0" max="255"><br>
-				B: 
-				<input type="range" name="slideBlue" value="<?php echo $b; ?>" min="0" max="255"><br>
+				<div id="rslider" class="slider" data-color="r"></div>
+				<div id="gslider" class="slider" data-color="g"></div>
+				<div id="bslider" class="slider" data-color="b"></div>
 			</div>
 			<br>		
-			<div id="picker">
+			<div id="colorPicker">
 				Color Value (#ffffff):<br>
 				<input type="color" name="color2" value="<?php echo $colorString; ?>"><br>
 			</div>
 			<br>
-			<input type="submit">
+			<input id="submit" type="submit">
 		</form>
-		THE COLORED SLIDERS DO NOT CURRENTLY WORK
-		<div id="rslider" class="slider" data-color="r"></div>
-		<div id="gslider" class="slider" data-color="g"></div>
-		<div id="bslider" class="slider" data-color="b"></div>
+		<br>
 	</body>
 </html>
 
@@ -98,6 +87,16 @@
 			range: "min",
 			max: 255,
 			value: rgb['b']
+		});
+
+		// Append JS slider values to GET request
+		$("#form1").on('submit',function(event){
+			var slideRed = $("<input>").attr("type", "hidden").attr("name", "slideRed").val($("#rslider").slider("value"));
+			var slideGreen = $("<input>").attr("type", "hidden").attr("name", "slideGreen").val($("#gslider").slider("value"));
+			var slideBlue = $("<input>").attr("type", "hidden").attr("name", "slideBlue").val($("#bslider").slider("value"));
+			$('#form1').append($(slideRed));
+			$('#form1').append($(slideGreen));
+			$('#form1').append($(slideBlue));
 		});
 	});
 
