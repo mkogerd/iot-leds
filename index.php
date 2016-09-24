@@ -16,7 +16,6 @@
 
 		<!-- Custom style Jquery sliders to match colors -->
 		<style>
-			*{ margin: 0px; padding: 0px;}
 			body {
 				text-align: center;
 				background-image: url('images/mochi.JPG');
@@ -52,21 +51,21 @@
 			<!-- Red Control Fields -->
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><b>Red</b></span>
-				<input type="text" name="r" class="form-control text-center" value="<?php echo $r; ?>"><br>
+				<input type="text" id="r" name="r" class="form-control text-center" value="<?php echo $r; ?>"><br>
 				<span class="input-group-addon input-group-addon-slider"><div id="rslider" class="slider" data-color="r"></div></span>
 			</div>
 
 			<!-- Green Control Fields -->
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><b>Green</b></span>
-				<input type="text" name="g" class="form-control text-center" value="<?php echo $g; ?>"><br>
+				<input type="text" id="g" name="g" class="form-control text-center" value="<?php echo $g; ?>"><br>
 				<span class="input-group-addon input-group-addon-slider"><div id="gslider" class="slider" data-color="g"></div></span>
 			</div>
 
 			<!-- Blue Control Fields -->
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><b>Blue</b></span>
-				<input type="text" name="b" class="form-control text-center" value="<?php echo $b; ?>"><br>
+				<input type="text" id="b" name="b" class="form-control text-center" value="<?php echo $b; ?>"><br>
 				<span class="input-group-addon input-group-addon-slider"><div id="bslider" class="slider" data-color="b"></div></span>
 			</div>
 
@@ -74,7 +73,7 @@
 			<div class="panel panel-default" style="margin:0;">
 				<div class="panel-heading" style="margin:0;">
 					Color Value (#ffffff):<br>
-					<input type="color" name="color2" value="<?php echo $colorString; ?>"><br>
+					<input type="color" id="color2" name="color2" value="<?php echo $colorString; ?>"><br>
 					<br>
 					<input id="submit" type="submit">
 					<br>
@@ -109,11 +108,12 @@
 		return hex.join( "" ).toUpperCase();
 	}
 	function refreshTitleColor() {
-		var red = $("#rslider").slider("value");
+		var red = $("#rslider").slider("value");	// Poll current values
 		var green = $("#gslider").slider("value");
 		var blue = $("#bslider").slider("value");
 		var hex = hexFromRGB( red, green, blue );
-		$("#title").css( "color", "#"+hex);
+		$("#title").css("color", "#"+hex);		// Update title color
+		$("#color2").val("#"+hex);			// Update color-picker input color 
 	}
 
 	// Jquery JS
@@ -128,32 +128,22 @@
 			g: <?php echo $g; ?>,
 			b: <?php echo $b; ?>
 		}
-		// Set up Jscript sliders	
-		$('#rslider').slider({
-			orientation: "horizontal",
-			range: "min",
-			max: 255,
-			value: rgb['r'],
-			slide: refreshTitleColor,
-			change: refreshTitleColor
-		});
-		$('#gslider').slider({
-			orientation: "horizontal",
-			range: "min",
-			max: 255,
-			value: rgb['g'],
-			slide: refreshTitleColor,
-			change: refreshTitleColor
-		});
-		$('#bslider').slider({
-			orientation: "horizontal",
-			range: "min",
-			max: 255,
-			value: rgb['b'],
-			slide: refreshTitleColor,
-			change: refreshTitleColor
-		});
 
+		// Set up JS sliders	
+		$('.slider').each(function() {
+			$(this).slider({
+				orientation: "horizontal",
+				range: "min",
+				max: 255,
+				value: rgb[$(this).data('color')],
+				slide: function(event, ui) {
+					$("#"+$(this).attr("data-color")).val($(this).slider("value"));
+					refreshTitleColor();},
+				change: function(event, ui) {
+					$("#"+$(this).attr("data-color")).val($(this).slider("value"));
+					refreshTitleColor();},
+			});
+		});
 		// Append JS slider values to GET request
 		$("#form1").on('submit',function(event){
 			var slideRed = $("<input>").attr("type", "hidden").attr("name", "slideRed").val($("#rslider").slider("value"));
