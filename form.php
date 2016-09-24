@@ -6,56 +6,10 @@
 	$b = hexdec(file_get_contents('color.txt', NULL, NULL, 5, 2));
 	
 	// Set LEDs based on color form
-	if($_GET["color2"] !=$color && $_GET["color2"] !=""){
-		echo $_GET["color2"];
-
+	if($_GET["color"] !=$color && $_GET["color"] !=""){
 		$myfile = fopen("color.txt", "w") or die("Unable to open file!");
-                fwrite($myfile, $_GET["color2"]);
+                fwrite($myfile, strtolower($_GET["color"]));
                 fclose($myfile);
-	}
-
-	// Set LEDs based on sliders
-	else if($_GET["slideRed"] !=$r || $_GET["slideGreen"] !=$g || $_GET["slideBlue"] !=$b){
-		echo "using sliders";
-		// Make sure each color contributes two characters of data
-		$wr = dechex($_GET["slideRed"]);
-      		$wg = dechex($_GET["slideGreen"]);
-      	  	$wb = dechex($_GET["slideBlue"]);
-		if(strlen($wr) < "2")
-			$wr = "0".$wr;
-		if(strlen($wg) < "2")
-                        $wg = "0".$wg;
-		if(strlen($wb) < "2")
-                        $wb = "0".$wb;
-
-		// Record input
-                $myfile = fopen("color.txt", "w") or die("Unable to open file!");
-                fwrite($myfile, "#".$wr.$wg.$wb);
-                fclose($myfile);
-	}
-
-	// Set LEDs based on text fields
-	else if($_GET["r"] !=$r || $_GET["g"] !=$g || $_GET["b"] !=$b){
-		// Check for valid input (0-255)
-		if($_GET["r"] >= "0" && $_GET["r"] <="255" && $_GET["g"] >="0" && $_GET["g"] <="255" && $_GET["b"] >="0"&& $_GET["b"] <="255"){
-
-			// Make sure each color contributes two characters of data
-			$wr = dechex($_GET["r"]);
-      			$wg = dechex($_GET["g"]);
-			$wb = dechex($_GET["b"]);
-			if(strlen($wr) < "2")
-				$wr = "0".$wr;
-			if(strlen($wg) < "2")
-                	        $wg = "0".$wg;
-			if(strlen($wb) < "2")
-				$wb = "0".$wb;
-
-        fwrite($testfile, "Opening file for TEXT #3 -> ");
-			// Record input
-			$myfile = fopen("color.txt", "w") or die("Unable to open file!");
-			fwrite($myfile, "#".$wr.$wg.$wb);
-			fclose($myfile);
-		}
 	}
 
 	# Return to original page

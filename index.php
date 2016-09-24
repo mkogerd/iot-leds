@@ -73,7 +73,7 @@
 			<div class="panel panel-default" style="margin:0;">
 				<div class="panel-heading" style="margin:0;">
 					Color Value (#ffffff):<br>
-					<input type="color" id="color2" name="color2" value="<?php echo $colorString; ?>"><br>
+					<input type="color" id="color" name="color" value="<?php echo $colorString; ?>"><br>
 					<br>
 					<input id="submit" type="submit">
 					<br>
@@ -113,7 +113,7 @@
 		var blue = $("#bslider").slider("value");
 		var hex = hexFromRGB( red, green, blue );
 		$("#title").css("color", "#"+hex);		// Update title color
-		$("#color2").val("#"+hex);			// Update color-picker input color 
+		$("#color").val("#"+hex);			// Update color-picker input color 
 	}
 
 	// Jquery JS
@@ -154,7 +154,7 @@
 
 		// Update sliders from color picker
 		if (color_support) {	// Browsers that support color input type (Chrome, android devices, etc...)
-			$('#color2').on('input', function() {
+			$('#color').on('input', function() {
 				var r = parseInt(this.value.substring(1, 3), 16),
 				g = parseInt(this.value.substring(3, 5), 16),
 				b = parseInt(this.value.substring(5, 7), 16);
@@ -164,7 +164,7 @@
 				$('#bslider').slider('value', b);
 			});
 		} else {		// Devices that don't support color input type (Safari, Crapple, etc...)
-			$('#color2').on('blur', function() {
+			$('#color').on('blur', function() {
 				var r = parseInt(this.value.substring(1, 3), 16),
 				g = parseInt(this.value.substring(3, 5), 16),
 				b = parseInt(this.value.substring(5, 7), 16);
