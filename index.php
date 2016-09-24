@@ -118,9 +118,6 @@
 
 	// Jquery JS
 	$(document).ready(function() {
-		$('#radio').on('click', function() {
-			$('#picker').slideToggle();
-		});
 		
 		// Preload color values
 		var rgb = {
@@ -128,6 +125,11 @@
 			g: <?php echo $g; ?>,
 			b: <?php echo $b; ?>
 		}
+
+		// See if browser supports color picker
+		var input = document.createElement("input");
+		input.type = "color";
+		var color_support = input.type === "color";
 
 		// Set up JS sliders	
 		$('.slider').each(function() {
@@ -144,6 +146,35 @@
 					refreshTitleColor();},
 			});
 		});
+		
+		// Update sliders from text box
+		$('input:text').on('input', function() {
+			$('#'+this.id+'slider').slider('value', this.value);
+		});
+
+		// Update sliders from color picker
+		if (color_support) {	// Browsers that support color input type (Chrome, android devices, etc...)
+			$('#color2').on('input', function() {
+				var r = parseInt(this.value.substring(1, 3), 16),
+				g = parseInt(this.value.substring(3, 5), 16),
+				b = parseInt(this.value.substring(5, 7), 16);
+				console.log("Red: : "+r+" Green: "+g+" Blue: "+b);
+				$('#rslider').slider('value', r);
+				$('#gslider').slider('value', g);
+				$('#bslider').slider('value', b);
+			});
+		} else {		// Devices that don't support color input type (Safari, Crapple, etc...)
+			$('#color2').on('blur', function() {
+				var r = parseInt(this.value.substring(1, 3), 16),
+				g = parseInt(this.value.substring(3, 5), 16),
+				b = parseInt(this.value.substring(5, 7), 16);
+				console.log("Red: : "+r+" Green: "+g+" Blue: "+b);
+				$('#rslider').slider('value', r);
+				$('#gslider').slider('value', g);
+				$('#bslider').slider('value', b);
+			});
+		}
+
 		// Append JS slider values to GET request
 		$("#form1").on('submit',function(event){
 			var slideRed = $("<input>").attr("type", "hidden").attr("name", "slideRed").val($("#rslider").slider("value"));
