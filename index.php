@@ -1,4 +1,5 @@
 <?php
+	// Load current color values
 	$colorString = file_get_contents('color.txt');
 	$r = hexdec(file_get_contents('color.txt', NULL, NULL, 1, 2));
         $g = hexdec(file_get_contents('color.txt', NULL, NULL, 3, 2));
@@ -7,54 +8,79 @@
 
 <html>
 	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 		<!-- Import Jquery UI stylesheets -->
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
 
 		<!-- Custom style Jquery sliders to match colors -->
 		<style>
-			.clearfix {
-				overflow: auto;
-			}
-			.slider {
-				width: 50%;
-				margin: 15px;
-			}
 			.slider[data-color="r"] .ui-slider-range { background: #ff0000; }
 			.slider[data-color="g"] .ui-slider-range { background: #00ff00; }
 			.slider[data-color="b"] .ui-slider-range { background: #0000ff; }
+			.input-group-addon {
+                                min-width: 180px;
+			}
+			.input-group-addon-slider {
+				width: 50%;
+			}
 		</style>
 	</head>
-	<body> 
-		<form id="form1" method="get" action="form.php">
-			<div id="text">
-				Red:<br>
-				<input type="text" name="r" value="<?php echo $r; ?>"><br>
-				Green:<br>
-				<input type="text" name="g" value="<?php echo $g; ?>"><br>
-				Blue:<br>
-				<input type="text" name="b" value="<?php echo $b; ?>"><br>
+	<body> 	
+		<div class="panel panel-default text-center">
+
+			<!-- Title -->
+			<div class="panel-heading"><h1>Control my lights!</h1></div>
+
+			<!-- Main Content -->
+			<div class="panel-body">
+				<form id="form1" class="container" method="get" action="form.php">
+					<div class="panel panel-default">
+
+						<div class="panel-heading"><h2>Color<h2></div>
+
+						<!-- Red Control Fields -->
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon"><b>Red</b></span>
+							<input type="text" name="r" class="form-control text-center" value="<?php echo $r; ?>"><br>
+							<span class="input-group-addon input-group-addon-slider"><div id="rslider" class="slider" data-color="r"></div></span>
+						</div>
+
+						<!-- Green Control Fields -->
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon"><b>Green</b></span>
+							<input type="text" name="g" class="form-control text-center" value="<?php echo $g; ?>"><br>
+							<span class="input-group-addon input-group-addon-slider"><div id="gslider" class="slider" data-color="g"></div></span>
+						</div>
+
+						<!-- Blue Control Fields -->
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon"><b>Blue</b></span>
+							<input type="text" name="b" class="form-control text-center" value="<?php echo $b; ?>"><br>
+							<span class="input-group-addon input-group-addon-slider"><div id="bslider" class="slider" data-color="b"></div></span>
+						</div>
+					</div>
+
+					<!-- HTML5 Color-Picker Control Field -->
+					<div id="colorPicker">
+						Color Value (#ffffff):<br>
+						<input type="color" name="color2" value="<?php echo $colorString; ?>"><br>
+					</div>
+					<br>
+					<input id="submit" type="submit">
+				</form>
 			</div>
-			<br>
-			<div id="sliders">
-				<div id="rslider" class="slider" data-color="r"></div>
-				<div id="gslider" class="slider" data-color="g"></div>
-				<div id="bslider" class="slider" data-color="b"></div>
-			</div>
-			<br>		
-			<div id="colorPicker">
-				Color Value (#ffffff):<br>
-				<input type="color" name="color2" value="<?php echo $colorString; ?>"><br>
-			</div>
-			<br>
-			<input id="submit" type="submit">
-		</form>
-		<br>
+		</div>
 	</body>
 </html>
 
 <!-- Import Jquery Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
 	$(document).ready(function() {
