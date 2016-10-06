@@ -70,13 +70,11 @@
 			<!-- HTML5 Color-Picker Control Field  and Submit-->
 			<div class="panel panel-default" style="margin:0;">
 				<div class="panel-heading" style="margin:0;">
-					<form  method="get" action="form.php" onSubmit="return false;">
-						Color Value (#ffffff):<br>
-						<input type="color" id="color" name="color" value="<?php echo $colorString; ?>"><br>
-						<br>
-						<input id="submit" type="submit">
-						<br>
-					</form>
+					Color Value (#ffffff):<br>
+					<input type="color" id="color" name="color" value="<?php echo $colorString; ?>"><br>
+					<br>
+					<button id="submit">Submit</button>
+					<br>
 				</div>
 			</div>
 
