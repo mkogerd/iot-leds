@@ -70,7 +70,7 @@
 			<!-- HTML5 Color-Picker Control Field  and Submit-->
 			<div class="panel panel-default" style="margin:0;">
 				<div class="panel-heading" style="margin:0;">
-					<form  method="get" action="form.php">
+					<form  method="get" action="form.php" onSubmit="return false;">
 						Color Value (#ffffff):<br>
 						<input type="color" id="color" name="color" value="<?php echo $colorString; ?>"><br>
 						<br>
@@ -175,6 +175,20 @@
 				$('#bslider').slider('value', b);
 			});
 		}
+
+		// Submit values on button press
+		$("#submit").click(function() {
+			var url = "form.php";
+			var params = "color="+encodeURIComponent(document.getElementById("color").value);
+			var http = new XMLHttpRequest();
+			http.open("GET", url+"?"+params, true);
+			http.onreadystatechange = function() {
+				if(http.readyState == 4 && http.status == 200) {
+					alert(http.responseText);
+				}
+			}
+			http.send(null);
+		});
 	});
 
 </script>
